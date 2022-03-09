@@ -1,22 +1,35 @@
-byte randomList[10];
+/*
+version Date:  03-03-22
+A basic example of a bubble sort useing arduino.
+By             Maderdash,
+Free-Beer rights option.
+*/
+
+// This is the array for the data. Make it as large as you need.
+#define NUMBER_OF_SAMPLES 10
+byte randomList[NUMBER_OF_SAMPLES] = {0}; 
 void setup(){
   Serial.begin(9600);
   Serial.println("starting");
+  delay(1000);
 }
+
+// This is for demo, it creates a random set of numbers and populates the randomList array.
 void createRandomList() {
-  for (byte count = 0; count < 10; count++) {
+  for (byte count = 0; count < NUMBER_OF_SAMPLES; count++) {
     randomList[count] = random(0, 100);
   }
-  for (byte count = 0; count < 10; count++) {
+  for (byte count = 0; count < NUMBER_OF_SAMPLES; count++) {
     Serial.print(randomList[count]);
     Serial.print(" ");
   }
   Serial.println("this is the list of random numbers");
   delay(1000);
 }
+// This is where the work is done.
 void sort() {
-  for (byte iterator = 0; iterator < 10; iterator++) {
-    for (byte count = 9 ; count > 0 + iterator; count--) {
+  for (byte iterator = 0; iterator < NUMBER_OF_SAMPLES; iterator++) {
+    for (byte count = (NUMBER_OF_SAMPLES - 1) ; count > 0 + iterator; count--) {
       if (randomList[count] < randomList[count - 1]) {
         int hold = randomList[count - 1];
         randomList[count - 1] = randomList[count];
@@ -25,13 +38,19 @@ void sort() {
     }
   }
 }
-void loop() {
-  createRandomList();
-  sort();
-  for (byte count = 0; count < 10; count++) {
+// This is just to see the data.
+void testPrint(){
+  for (byte count = 0; count < NUMBER_OF_SAMPLES; count++) {
     Serial.print(randomList[count]);
     Serial.print(" ");
   }
   Serial.println("This is the sorted list.");
-  delay(10000);
+}
+
+
+void loop() {
+  createRandomList(); // <<<<<<<<======This can be removed
+  sort();
+  testPrint();        // <<<<<<<<======This will be for testing, can be removed.
+  delay(1000);
 }
